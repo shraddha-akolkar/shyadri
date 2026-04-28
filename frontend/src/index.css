@@ -1,0 +1,156 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+:root {
+  --blue-color: #1581b9;
+  --red: #c2202d;
+  --black: #242424;
+}
+
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+
+
+body {
+  font-family: 'Figtree', sans-serif;
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+p{
+  font-size: 15px;
+    font-weight: 400;
+
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+
+.side-space {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.section-space {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+section {
+  width: 100%;
+}
+
+
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 28px;
+  }
+  .side-space {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.section-space {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+}
+
+
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 26px;
+  }
+
+   .side-space {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+}
+
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 24px;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .side-space {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+}

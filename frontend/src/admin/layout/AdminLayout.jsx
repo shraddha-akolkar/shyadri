@@ -1,0 +1,29 @@
+import { Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+// import "./Layout.css";
+
+function AdminLayout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin");
+    navigate("/admin");
+  };
+
+  return (
+    <div className="dashboard-wrapper">
+      <Sidebar onLogout={handleLogout} />
+
+      <div className="main-content">
+        <Header />
+
+        <div className="content-area">
+          <Outlet /> {/* 👈 THIS CHANGES PAGE */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AdminLayout;

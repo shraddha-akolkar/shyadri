@@ -1,0 +1,74 @@
+.doctors-header {
+  background-color: #f1fafd;
+  padding: 40px 0;
+}
+
+
+.doctors-header .row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.doctors-inner {
+  width: 70%;
+  margin: 0 auto;
+}
+
+
+.main-title {
+  font-size: 27px;
+  font-weight: 700;
+    font-family: 'Figtree';
+
+  color: #1a1a1a;
+}
+
+
+.sub-title {
+  font-size: 16px;
+  font-weight: 400;
+  /* margin-top: 6px; */
+    color: #1a1a1a;
+
+}
+
+
+@media (max-width: 1024px) {
+  .doctors-inner {
+    width: 80%;
+  }
+}
+
+@media (max-width: 992px) {
+  .doctors-inner {
+    width: 85%;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-title {
+    font-size: 24px;
+  }
+
+  .sub-title {
+    font-size: 14px;
+  }
+
+  .doctors-inner {
+    width: 92%;
+  }
+}
+
+@media (max-width: 552px) {
+  .main-title {
+    font-size: 20px;
+  }
+
+  .sub-title {
+    font-size: 13px;
+  }
+
+  .doctors-inner {
+    width: 96%;
+  }
+}
