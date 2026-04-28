@@ -4,6 +4,7 @@ import Dashboard from "./admin/dashboard/Dashboard";
 import Doctors from "./admin/doctors/Doctors";
 import Home from "./Pages/Home";
 import AdminLayout from "./admin/layout/AdminLayout";
+import CertainCard from "./components/CertainCard/CertainCard";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Login />} />
 
-        {/* ✅ USE LAYOUT HERE */}
+        <Route path="/certaincard" element={<CertainCard />} />
+
         <Route element={<AdminLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/doctors" element={<Doctors />} />

@@ -4,9 +4,9 @@ import footer_bottom from "../../assets/imgs/footer_bottom.png"
 const Footer = () => {
   return (
     <section>
-    <footer className="footer-section">
-      <div className="container-fluid px-5">
-        <div className="row gy-4">
+    <footer className="footer-section ">
+      
+        <div className="row gy-4 side-space">
 
        
           <div className="col-lg-3 col-md-6">
@@ -126,7 +126,6 @@ const Footer = () => {
             </ul>
           </div>
 
-        </div>
 
 <div className="footer-accreditation">
   <div className="accreditation-box">

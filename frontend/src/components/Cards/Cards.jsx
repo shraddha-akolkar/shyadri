@@ -3,33 +3,32 @@ import Refresh from "../../assets/svg/Refresh";
 import Arrow from "../../assets/svg/Arrow";
 import dr1 from "../../assets/imgs/dr1.webp";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const doctors = [
   { id: 1, name: "aDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
   { id: 2, name: "bDr. Abhay Somani", speciality: "Cardiology", experience: null, image: dr1 },
   { id: 3, name: "cDr. Abhay Sukhatme", speciality: "Orthopaedics", experience: null, image: dr1 },
   { id: 4, name: "dDr. Abhijeet", speciality: "Paediatrics, Neurology", experience: "13 Years", image: dr1 },
-{ id: 5, name: "eDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
+  { id: 5, name: "eDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
   { id: 6, name: "fDr. Abhay Somani", speciality: "Cardiology", experience: null, image: dr1 },
   { id: 7, name: "gDr. Abhay Sukhatme", speciality: "Orthopaedics", experience: null, image: dr1 },
   { id: 8, name: "hDr. Abhijeet Botre", speciality: "Paediatrics, Neurology", experience: "13 Years", image: dr1 },
-{ id: 9, name: "iDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
+  { id: 9, name: "iDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
   { id: 10, name: "Dr. Abhay Somani", speciality: "Cardiology", experience: null, image: dr1 },
   { id: 11, name: "jDr. Abhay Sukhatme", speciality: "Orthopaedics", experience: null, image: dr1 },
   { id: 12, name: "Dr. Abhijeet Botre", speciality: "Paediatrics, Neurology", experience: "13 Years", image: dr1 },
-{ id: 13, name: "kDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
+  { id: 13, name: "kDr. Abhay Kulkarni", speciality: "Orthopaedics", experience: "20 Years", image: dr1 },
   { id: 14, name: "kDr. Abhay Somani", speciality: "Cardiology", experience: null, image: dr1 },
   { id: 15, name: "gDr. Abhay Sukhatme", speciality: "Orthopaedics", experience: null, image: dr1 },
   { id: 16, name: "sDr. Abhijeet Botre", speciality: "Paediatrics, Neurology", experience: "13 Years", image: dr1 },
-
 ];
 
-const ITEMS_PER_PAGE = 8; 
+const ITEMS_PER_PAGE = 8;
 const TOTAL_PAGES = 15;
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const getPages = () => {
-
     const pages = [];
 
     if (totalPages <= 6) {
@@ -97,6 +96,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 };
 
 const Cards = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(doctors.length / ITEMS_PER_PAGE) || TOTAL_PAGES;
@@ -147,8 +147,8 @@ const Cards = () => {
             </div>
             <div className="card-actions">
               <div className="action-row">
-                <button className="btn-view">  View Now <span><Arrow /></span></button>
-               
+<button className="btn-view" onClick={() => navigate("/CertainCard")}>                  View Now <span><Arrow /></span>
+                </button>
                 <button className="btn-book">Book Now</button>
               </div>
               <button className="btn-callback">Call Back</button>
