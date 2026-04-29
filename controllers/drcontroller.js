@@ -1,3 +1,4 @@
+const { Op, fn, col, where } = require("sequelize");
 const Doctor = require("../models/dr");
 
 // helper → clean empty values
@@ -54,8 +55,27 @@ exports.createDoctor = async (req, res) => {
 // GET ALL
 exports.getAllDoctors = async (req, res) => {
   try {
+    const { search, location, hospital, department, day } = req.query;
+    const filters = [];
+
+    const addContainsFilter = (field, value) => {
+      if (!value) return;
+      filters.push(
+        where(fn("LOWER", col(field)), {
+          [Op.like]: `%${String(value).toLowerCase()}%`,
+        })
+      );
+    };
+
+    addContainsFilter("dr_title", search);
+    addContainsFilter("location", location);
+    addContainsFilter("hospital", hospital);
+    addContainsFilter("department", department);
+    addContainsFilter("day", day);
+
     const doctors = await Doctor.findAll({
-      order: [["id", "DESC"]],
+      where: filters.length ? { [Op.and]: filters } : undefined,
+      order: [["id", "ASC"]],
     });
     res.json(doctors);
   } catch (error) {

@@ -97,7 +97,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 const Cards = () => {
   const navigate = useNavigate();
 
-  const [doctors, setDoctors] = useState([]);
+  const [allDoctors, setAllDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -108,58 +108,39 @@ const Cards = () => {
   const [dayWise, setDayWise] = useState("");
 
   useEffect(() => {
-    fetchDoctors();
+    fetchAllDoctors();
   }, []);
 
   useEffect(() => {
-    applyFilters();
-  }, [doctors, search, location, hospital, department, dayWise]);
+    fetchDoctors();
+  }, [search, location, hospital, department, dayWise]);
 
-  const fetchDoctors = async () => {
+  const fetchAllDoctors = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/doctors");
-      setDoctors(res.data);
+      setAllDoctors(res.data);
       setFilteredDoctors(res.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const applyFilters = () => {
-    let data = [...doctors];
-
-    if (search) {
-      data = data.filter((doc) =>
-        doc.dr_title?.toLowerCase().includes(search.toLowerCase())
-      );
+  const fetchDoctors = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/doctors", {
+        params: {
+          search: search || undefined,
+          location: location || undefined,
+          hospital: hospital || undefined,
+          department: department || undefined,
+          day: dayWise || undefined,
+        },
+      });
+      setFilteredDoctors(res.data);
+      setCurrentPage(1);
+    } catch (err) {
+      console.log(err);
     }
-
-    if (location) {
-      data = data.filter((doc) =>
-        doc.location?.toLowerCase().includes(location.toLowerCase())
-      );
-    }
-
-    if (hospital) {
-      data = data.filter((doc) =>
-        doc.hospital?.toLowerCase().includes(hospital.toLowerCase())
-      );
-    }
-
-    if (department) {
-      data = data.filter((doc) =>
-        doc.department?.toLowerCase().includes(department.toLowerCase())
-      );
-    }
-
-    if (dayWise) {
-      data = data.filter((doc) =>
-        doc.available_day?.toLowerCase().includes(dayWise.toLowerCase())
-      );
-    }
-
-    setFilteredDoctors(data);
-    setCurrentPage(1);
   };
 
   const resetFilters = () => {
@@ -168,8 +149,6 @@ const Cards = () => {
     setHospital("");
     setDepartment("");
     setDayWise("");
-    setFilteredDoctors(doctors);
-    setCurrentPage(1);
   };
 
   const totalPages = Math.ceil(filteredDoctors.length / ITEMS_PER_PAGE);
@@ -207,7 +186,7 @@ const Cards = () => {
             onChange={(e) => setLocation(e.target.value)}
           >
             <option value="">Location</option>
-            {[...new Set(doctors.map((d) => d.location).filter(Boolean))].map(
+            {[...new Set(allDoctors.map((d) => d.location).filter(Boolean))].map(
               (item, i) => (
                 <option key={i} value={item}>
                   {item}
@@ -221,7 +200,7 @@ const Cards = () => {
             onChange={(e) => setHospital(e.target.value)}
           >
             <option value="">Hospital</option>
-            {[...new Set(doctors.map((d) => d.hospital).filter(Boolean))].map(
+            {[...new Set(allDoctors.map((d) => d.hospital).filter(Boolean))].map(
               (item, i) => (
                 <option key={i} value={item}>
                   {item}
@@ -235,7 +214,7 @@ const Cards = () => {
             onChange={(e) => setDepartment(e.target.value)}
           >
             <option value="">Department</option>
-            {[...new Set(doctors.map((d) => d.department).filter(Boolean))].map(
+            {[...new Set(allDoctors.map((d) => d.department).filter(Boolean))].map(
               (item, i) => (
                 <option key={i} value={item}>
                   {item}
@@ -246,7 +225,7 @@ const Cards = () => {
 
           <select value={dayWise} onChange={(e) => setDayWise(e.target.value)}>
             <option value="">Day Wise</option>
-            {[...new Set(doctors.map((d) => d.available_day).filter(Boolean))].map(
+            {[...new Set(allDoctors.map((d) => d.day).filter(Boolean))].map(
               (item, i) => (
                 <option key={i} value={item}>
                   {item}
