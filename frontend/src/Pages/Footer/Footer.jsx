@@ -1,6 +1,7 @@
 import "./Footer.css";
 import logo from "../../assets/imgs/footer_logo.webp"
 import footer_bottom from "../../assets/imgs/footer_bottom.png"
+import Footericon from "../../assets/imgs/footer1.png"
 const Footer = () => {
   return (
     <section>
@@ -16,7 +17,7 @@ const Footer = () => {
 
             <div className="footer-contact">
               <div className="footer-item d-flex">
-                <img src="/icons/company.png" alt="" className="icon" />
+                <img src={Footericon} alt="" className="icon" />
                 <div>
                   <h6>Company name</h6>
                   <p>Sahyadri Hospitals, Private Limited</p>
@@ -24,7 +25,7 @@ const Footer = () => {
               </div>
 
               <div className="footer-item d-flex">
-                <img src="/icons/phone.png" alt="" className="icon" />
+                <img src={Footericon} alt="" className="icon" />
                 <div>
                   <h6>Emergency & Appointment</h6>
                   <p>+91 88888 22222</p>
@@ -32,7 +33,7 @@ const Footer = () => {
               </div>
 
               <div className="footer-item d-flex">
-                <img src="../../assets/imgs/footer1" alt="" className="icon" />
+                <img src={Footericon} alt="" className="icon" />
                 <div>
                   <h6>Email Us</h6>
                   <p>feedback.sahyadri@manipalhospitals.com</p>
@@ -40,7 +41,7 @@ const Footer = () => {
               </div>
 
               <div className="footer-item d-flex">
-                <img src="/icons/location.png" alt="" className="icon" />
+                <img src={Footericon} alt="" className="icon" />
                 <div>
                   <h6>Registered Office</h6>
                   <p>
