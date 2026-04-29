@@ -137,6 +137,21 @@
   color: #444;
   line-height: 1.6;
 }
+.ql-editor{
+    font-family: 'Figtree';
+    padding: 0;
+
+}
+.ql-editor ol{
+  padding: 0;
+}
+
+
+.ql-editor p{
+    font-family: 'Figtree';
+font-size: 17px;
+font-weight:500 !important;
+}
 
 
 .callback-card {

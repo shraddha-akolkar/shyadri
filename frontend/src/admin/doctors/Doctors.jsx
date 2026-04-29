@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import "./Doctors.css"
+import "./Doctors.css";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [editId, setEditId] = useState(null);
 
   const [form, setForm] = useState({
     dr_title: "",
+    dr_role: "",
     dr_subtitle: "",
     dr_exp: "",
     department: "",
@@ -15,6 +19,7 @@ function Doctors() {
     dr_image: "",
   });
 
+  // FETCH DATA
   useEffect(() => {
     fetchDoctors();
   }, []);
@@ -24,53 +29,72 @@ function Doctors() {
     setDoctors(res.data);
   };
 
+  // INPUT CHANGE
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // IMAGE CHANGE
   const handleImage = (e) => {
     setForm({ ...form, dr_image: e.target.files[0] });
   };
 
-  const resetForm = () => {
-    setForm({
-      dr_title: "",
-      dr_subtitle: "",
-      dr_exp: "",
-      department: "",
-      contact: "",
-      dr_desc: "",
-      dr_image: "",
-    });
-    setEditId(null);
-  };
+  // RESET FORM
+const resetForm = () => {
+  setForm({
+    dr_title: "",
+    dr_role: "",
+    dr_subtitle: "",
+    dr_exp: "",
+    department: "",
+    contact: "",
+    dr_desc: "",
+    dr_image: "",
+  });
+  setEditId(null);
 
-  // ✅ CREATE / UPDATE
+  // Clear Quill
+  if (quillInstance.current) {
+    quillInstance.current.setText("");
+  }
+
+  // ✅ Clear file input
+  if (fileInputRef.current) {
+    fileInputRef.current.value = "";
+  }
+};
+
+  // CREATE / UPDATE
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
-    Object.keys(form).forEach((key) => {
-      data.append(key, form[key]);
-    });
+
+    data.append("dr_title", form.dr_title);
+    data.append("dr_role", form.dr_role);
+    data.append("dr_subtitle", form.dr_subtitle);
+    data.append("dr_exp", form.dr_exp);
+    data.append("department", form.department);
+    data.append("contact", form.contact);
+    data.append("dr_desc", form.dr_desc);
+
+    // ✅ ONLY send image if new file selected
+    if (form.dr_image instanceof File) {
+      data.append("dr_image", form.dr_image);
+    }
 
     try {
       if (editId) {
-        // ⚠️ IMPORTANT FIX
         await axios.put(
           `http://localhost:5000/api/doctors/${editId}`,
           data,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
+          { headers: { "Content-Type": "multipart/form-data" } }
         );
       } else {
         await axios.post(
           "http://localhost:5000/api/doctors",
           data,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
+          { headers: { "Content-Type": "multipart/form-data" } }
         );
       }
 
@@ -87,12 +111,13 @@ function Doctors() {
 
     setForm({
       dr_title: doc.dr_title,
+      dr_role: doc.dr_role,
       dr_subtitle: doc.dr_subtitle,
       dr_exp: doc.dr_exp,
       department: doc.department,
       contact: doc.contact,
       dr_desc: doc.dr_desc,
-      dr_image: doc.dr_image,
+      dr_image: doc.dr_image, // string for preview
     });
 
     window.scrollTo(0, 0);
@@ -101,12 +126,38 @@ function Doctors() {
   // DELETE
   const handleDelete = async (id) => {
     if (window.confirm("Delete doctor?")) {
-      await axios.delete(
-        `http://localhost:5000/api/doctors/${id}`
-      );
+      await axios.delete(`http://localhost:5000/api/doctors/${id}`);
       fetchDoctors();
     }
   };
+
+  // QUILL EDITOR
+  const fileInputRef = useRef(null);
+
+  const quillRef = useRef(null);
+  const quillInstance = useRef(null);
+
+  useEffect(() => {
+    if (quillRef.current && !quillInstance.current) {
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        placeholder: "Description",
+      });
+
+      quillInstance.current.on("text-change", () => {
+        setForm((prev) => ({
+          ...prev,
+          dr_desc: quillInstance.current.root.innerHTML,
+        }));
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (quillInstance.current) {
+      quillInstance.current.root.innerHTML = form.dr_desc || "";
+    }
+  }, [editId]);
 
   return (
     <>
@@ -119,6 +170,7 @@ function Doctors() {
         <div className="p-4">
           <form onSubmit={handleSubmit}>
             <div className="row g-3">
+
               <div className="col-md-6">
                 <input
                   name="dr_title"
@@ -132,6 +184,16 @@ function Doctors() {
 
               <div className="col-md-6">
                 <input
+                  name="dr_role"
+                  className="form-control"
+                  placeholder="Role (Consultant, Surgeon...)"
+                  value={form.dr_role}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col-md-6">
+                <input
                   name="dr_subtitle"
                   className="form-control"
                   placeholder="Subtitle"
@@ -140,7 +202,7 @@ function Doctors() {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <input
                   name="dr_exp"
                   type="number"
@@ -151,7 +213,7 @@ function Doctors() {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <input
                   name="department"
                   className="form-control"
@@ -161,7 +223,7 @@ function Doctors() {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <input
                   name="contact"
                   className="form-control"
@@ -172,23 +234,30 @@ function Doctors() {
               </div>
 
               <div className="col-12">
-                <textarea
-                  name="dr_desc"
-                  className="form-control"
-                  placeholder="Description"
-                  value={form.dr_desc}
-                  onChange={handleChange}
-                />
+                <div ref={quillRef} style={{ background: "#fff", minHeight: "150px" }} />
               </div>
 
-              <div className="col-12">
-                <input
-                  type="file"
-                  className="form-control"
-                  onChange={handleImage}
-                />
-              </div>
+              {/* <div className="col-12 pt-3">
+  <label className="form-label">Doctor Image</label>
 
+  <input
+    type="file"
+    name="dr_image"
+    className="form-control"
+    accept="image/*"
+    onChange={handleImage}
+  />
+</div> */}
+  <div className="col-12">
+               <input
+  type="file"
+  name="dr_image"
+  className="form-control mt-lg-5"
+  accept="image/*"
+  onChange={handleImage}
+  ref={fileInputRef}  // ✅ add this
+/>
+              </div>
               {/* IMAGE PREVIEW */}
               {form.dr_image && (
                 <div className="col-12">
@@ -219,112 +288,96 @@ function Doctors() {
                   </button>
                 )}
               </div>
+
             </div>
           </form>
         </div>
       </div>
 
       {/* TABLE */}
-      {/* TABLE */}
-<div className="table-card">
-  <div className="table-card-header">
-    <h6>Doctors List</h6>
-    <span>{doctors.length} Records</span>
+      <div className="table-card">
+        <div className="table-card-header">
+          <h6>Doctors List</h6>
+          <span>{doctors.length} Records</span>
+        </div>
+
+        <div className="table-responsive">
+          <table className="table align-middle">
+            <thead className="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Subtitle</th>
+                <th>Experience</th>
+                <th>Department</th>
+                <th>Contact</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {doctors.map((doc) => (
+                <tr key={doc.id}>
+                  <td>#{doc.id}</td>
+
+                  <td>
+                    <img
+                      src={
+                        doc.dr_image
+                          ? `http://localhost:5000/uploads/${doc.dr_image}`
+                          : "https://via.placeholder.com/60"
+                      }
+                      style={{ width: 60, height: 60, borderRadius: 8 }}
+                    />
+                  </td>
+
+                  <td>{doc.dr_title || "-"}</td>
+                  <td>{doc.dr_role || "-"}</td>
+                  <td>{doc.dr_subtitle || "-"}</td>
+                  <td>{doc.dr_exp ? `${doc.dr_exp} yrs` : "-"}</td>
+                  <td>{doc.department || "-"}</td>
+                  <td>{doc.contact || "-"}</td>
+
+                  <td>
+                    {doc.dr_desc
+                      ? doc.dr_desc.replace(/<[^>]+>/g, "").substring(0, 40) + "..."
+                      : "-"}
+                  </td>
+
+                  <td>
+  <div className="d-flex gap-2 flex-nowrap">
+    <button
+      className="btn btn-warning btn-sm"
+      onClick={() => handleEdit(doc)}
+    >
+      Edit
+    </button>
+
+    <button
+      className="btn btn-danger btn-sm"
+      onClick={() => handleDelete(doc.id)}
+    >
+      Delete
+    </button>
   </div>
+</td>
+                </tr>
+              ))}
 
-  <div className="table-responsive">
-    <table className="table  align-middle">
-      <thead className="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Subtitle</th>
-          <th>Experience</th>
-          <th>Department</th>
-          <th>Contact</th>
-          <th>Description</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {doctors.map((doc) => (
-          <tr key={doc.id}>
-            <td>#{doc.id}</td>
-
-            {/* IMAGE */}
-            <td>
-              <img
-                src={
-                  doc.dr_image
-                    ? `http://localhost:5000/uploads/${doc.dr_image}`
-                    : "https://via.placeholder.com/60"
-                }
-                alt="doctor"
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                }}
-              />
-            </td>
-
-            <td>{doc.dr_title}</td>
-
-            <td>{doc.dr_subtitle || "-"}</td>
-
-            <td>{doc.dr_exp ? `${doc.dr_exp} yrs` : "-"}</td>
-
-            <td>
-              <span >
-                {doc.department || "-"}
-              </span>
-            </td>
-
-            <td>{doc.contact || "-"}</td>
-
-            {/* DESCRIPTION SHORT */}
-            <td style={{ maxWidth: "200px" }}>
-              {doc.dr_desc
-                ? doc.dr_desc.substring(0, 40) + "..."
-                : "-"}
-            </td>
-
-            {/* ACTION */}
-            <td>
-              <div className="d-flex gap-2">
-                <button
-                  className="btn btn-sm btn-warning"
-                  onClick={() => handleEdit(doc)}
-                >
-                  Edit
-                </button>
-
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(doc.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
-        ))}
-
-        {/* EMPTY STATE */}
-        {doctors.length === 0 && (
-          <tr>
-            <td colSpan="9" className="text-center py-4">
-              No Doctors Found
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  </div>
-</div>
+              {doctors.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center">
+                    No Doctors Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }

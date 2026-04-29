@@ -121,8 +121,8 @@ background-size: 10px;
 }
 
 .doc-img {
-  width: 100px;
-  height: 140px;
+  width: 130px;
+  height: 160px;
   /* object-fit: cover; */
   object-position: top;
   border-radius: 10px;
@@ -312,6 +312,10 @@ background-size: 10px;
   font-size: 14px;
   color: #555;
   letter-spacing: 1px;
+}
+
+.dropdown .dept-dropdown{
+  width: 25% !important;
 }
 
 @media (max-width: 1024px) {
