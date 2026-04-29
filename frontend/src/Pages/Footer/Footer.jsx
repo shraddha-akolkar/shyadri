@@ -6,7 +6,7 @@ const Footer = () => {
     <section>
     <footer className="footer-section ">
       
-        <div className="row gy-4 side-space">
+        <div className="row gy-4 gx-5 side-space justify-content-between">
 
        
           <div className="col-lg-3 col-md-6">

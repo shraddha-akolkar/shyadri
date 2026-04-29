@@ -19,7 +19,7 @@ function AdminLayout() {
         <Header />
 
         <div className="content-area">
-          <Outlet /> {/* 👈 THIS CHANGES PAGE */}
+          <Outlet /> 
         </div>
       </div>
     </div>
