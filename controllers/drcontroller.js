@@ -3,8 +3,30 @@ const Doctor = require("../models/dr");
 
 // helper → clean empty values
 const clean = (val) => {
-  if (!val || val === "") return null;
-  return val;
+  if (
+    val === undefined ||
+    val === null ||
+    String(val).trim() === "" ||
+    String(val).trim().toLowerCase() === "null"
+  ) {
+    return null;
+  }
+  return String(val).trim();
+};
+
+
+const cleanNumber = (val) => {
+  if (
+    val === undefined ||
+    val === null ||
+    String(val).trim() === "" ||
+    String(val).trim().toLowerCase() === "null"
+  ) {
+    return null;
+  }
+
+  const num = Number(val);
+  return num > 0 ? num : null;
 };
 
 // CREATE
@@ -23,30 +45,30 @@ exports.createDoctor = async (req, res) => {
       day,
     } = req.body;
 
-    if (!dr_title) {
+    if (!clean(dr_title)) {
       return res.status(400).json({ message: "Doctor name is required" });
     }
 
     const image = req.file ? req.file.filename : null;
 
     const doctor = await Doctor.create({
-      dr_title,
+      dr_title: clean(dr_title),
       dr_role: clean(dr_role),
       dr_subtitle: clean(dr_subtitle),
-      dr_exp: dr_exp && Number(dr_exp) > 0 ? Number(dr_exp) : null,
+      dr_exp: cleanNumber(dr_exp),
       department: clean(department),
       contact: clean(contact),
       dr_desc: clean(dr_desc),
       dr_image: image,
-
-      // ✅ NEW FIELDS
       location: clean(location),
       hospital: clean(hospital),
       day: clean(day),
     });
 
-    res.status(201).json({ message: "Doctor created", doctor });
-
+    res.status(201).json({
+      message: "Doctor created",
+      doctor,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -59,10 +81,11 @@ exports.getAllDoctors = async (req, res) => {
     const filters = [];
 
     const addContainsFilter = (field, value) => {
-      if (!value) return;
+      if (!clean(value)) return;
+
       filters.push(
         where(fn("LOWER", col(field)), {
-          [Op.like]: `%${String(value).toLowerCase()}%`,
+          [Op.like]: `%${clean(value).toLowerCase()}%`,
         })
       );
     };
@@ -77,6 +100,7 @@ exports.getAllDoctors = async (req, res) => {
       where: filters.length ? { [Op.and]: filters } : undefined,
       order: [["id", "ASC"]],
     });
+
     res.json(doctors);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -110,26 +134,23 @@ exports.updateDoctor = async (req, res) => {
     const image = req.file ? req.file.filename : doctor.dr_image;
 
     await doctor.update({
-      dr_title: req.body.dr_title || doctor.dr_title,
+      dr_title: clean(req.body.dr_title) || doctor.dr_title,
       dr_role: clean(req.body.dr_role),
       dr_subtitle: clean(req.body.dr_subtitle),
-      dr_exp:
-        req.body.dr_exp && Number(req.body.dr_exp) > 0
-          ? Number(req.body.dr_exp)
-          : null,
+      dr_exp: cleanNumber(req.body.dr_exp),
       department: clean(req.body.department),
       contact: clean(req.body.contact),
       dr_desc: clean(req.body.dr_desc),
       dr_image: image,
-
-      // ✅ NEW FIELDS
       location: clean(req.body.location),
       hospital: clean(req.body.hospital),
       day: clean(req.body.day),
     });
 
-    res.json({ message: "Doctor updated", doctor });
-
+    res.json({
+      message: "Doctor updated",
+      doctor,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

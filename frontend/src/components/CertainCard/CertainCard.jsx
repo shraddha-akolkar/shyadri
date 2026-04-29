@@ -51,7 +51,7 @@ const CertainCard = () => {
               <div className="doctor-left-info">
   <h3 className="fw-bold">{doctor.dr_title}</h3>
 
-  {doctor.dr_role && (
+  {doctor.dr_role  && (
     <p className="mb-1">• {doctor.dr_role}</p>
   )}
 
