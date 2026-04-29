@@ -71,16 +71,16 @@
 
 .phone-text .number {
   font-weight: 600;
-  color: #e53935;
+  color: #c2202d;
 }
 
 
 .login-btn {
-  border: 1px solid #e53935;
+  border: 1px solid #c2202d;
   border-radius: 8px;
   padding: 6px 14px;
   background: white;
-  color: #e53935;
+  color: #c2202d;
   gap: 5px;
 }
 
@@ -125,16 +125,16 @@
 
 
 .home-btn {
-  border: 1px solid #e53935;
+  border: 1px solid #c2202d;
   background: white;
-  color: #e53935;
+  color: #c2202d;
   padding: 8px 16px;
   border-radius: 8px;
   font-weight: 500;
 }
 
 .book-btn {
-  background: #e53935;
+  background: #c2202d;
   color: white;
   border: none;
   padding: 8px 16px;

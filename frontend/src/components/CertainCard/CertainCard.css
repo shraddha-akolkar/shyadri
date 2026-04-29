@@ -1,0 +1,184 @@
+
+
+
+.doctor-card {
+  border-radius: 12px;
+  background-color: #f7f7f7;
+  padding: 20px ;
+}
+
+
+.doctor-img {
+  width: 220px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info-box {
+  background-color: #fff;
+  border-radius: 12px;
+  height: 250px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+}
+
+.experience {
+  color: #333;
+  font-weight: 500;
+
+}
+
+.contact {
+  font-size: 16px;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+
+
+
+
+
+
+
+
+.certain-card-title {
+  font-weight: 600;
+  position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+ 
+}
+
+.certain-card-title::after {
+  content: "";
+    background: linear-gradient(90deg, #b72840, #0088c6);
+    border-radius: .375rem;
+    bottom: -2px;
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    width: 50px;
+    
+}
+
+
+
+.opd-table {
+  border-radius: 10px;
+      box-shadow: 1px 3px 11px 0 #00000029;
+  margin-top: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+
+
+.opd-table .table {
+  margin-bottom: 0;
+  border-collapse: collapse;
+}
+
+
+.opd-table th {
+  padding: 14px;
+  font-weight: 600;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+}
+
+
+.opd-table td {
+  padding: 18px;
+  border: 1px solid #dcdcdc;
+  color: #555;
+}
+
+
+.opd-table tr:first-child th {
+  border-top: none;
+}
+
+.opd-table tr:last-child td {
+  border-bottom: none;
+}
+
+.opd-table th:first-child,
+.opd-table td:first-child {
+  border-left: none;
+}
+
+.opd-table th:last-child,
+.opd-table td:last-child {
+  border-right: none;
+}
+.active-day {
+  position: relative;
+}
+
+.active-day::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid #c2202d;
+}
+
+
+.about-text {
+  color: #444;
+  line-height: 1.6;
+}
+
+
+.callback-card {
+  background: #f4f4f4;
+  border-radius: 12px;
+  position: sticky;
+  top: 20px;
+}
+
+
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  font-size: 24px;
+}
+
+.form-control-card{
+      display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: rgb(255, 255, 255);
+    width: 100%;
+}
+
+.btn-card{
+    background-color: #c2202d;
+    color: #fff;
+    border: 1px solid #c2202d;
+}
+
+.btn-card:hover{
+background-color: #fff;
+border: 1px solid #c2202d;
+color: #c2202d;
+}
