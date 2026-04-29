@@ -8,18 +8,22 @@ function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  const [form, setForm] = useState({
-    dr_title: "",
-    dr_role: "",
-    dr_subtitle: "",
-    dr_exp: "",
-    department: "",
-    contact: "",
-    dr_desc: "",
-    dr_image: "",
-  });
+const [form, setForm] = useState({
+  dr_title: "",
+  dr_role: "",
+  dr_subtitle: "",
+  dr_exp: "",
+  department: "",
+  contact: "",
+  dr_desc: "",
+  dr_image: "",
 
-  // FETCH DATA
+  location: "",
+  hospital: "",
+  day: "",
+});
+
+
   useEffect(() => {
     fetchDoctors();
   }, []);
@@ -29,17 +33,17 @@ function Doctors() {
     setDoctors(res.data);
   };
 
-  // INPUT CHANGE
+ 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // IMAGE CHANGE
+ 
   const handleImage = (e) => {
     setForm({ ...form, dr_image: e.target.files[0] });
   };
 
-  // RESET FORM
+ 
 const resetForm = () => {
   setForm({
     dr_title: "",
@@ -50,21 +54,25 @@ const resetForm = () => {
     contact: "",
     dr_desc: "",
     dr_image: "",
+
+    
+    location: "",
+    hospital: "",
+    day: "",
   });
+
   setEditId(null);
 
-  // Clear Quill
   if (quillInstance.current) {
     quillInstance.current.setText("");
   }
 
-  // ✅ Clear file input
   if (fileInputRef.current) {
     fileInputRef.current.value = "";
   }
 };
 
-  // CREATE / UPDATE
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,8 +85,10 @@ const resetForm = () => {
     data.append("department", form.department);
     data.append("contact", form.contact);
     data.append("dr_desc", form.dr_desc);
-
-    // ✅ ONLY send image if new file selected
+data.append("location", form.location);
+data.append("hospital", form.hospital);
+data.append("day", form.day);
+   
     if (form.dr_image instanceof File) {
       data.append("dr_image", form.dr_image);
     }
@@ -106,22 +116,27 @@ const resetForm = () => {
   };
 
   // EDIT
-  const handleEdit = (doc) => {
-    setEditId(doc.id);
+const handleEdit = (doc) => {
+  setEditId(doc.id);
 
-    setForm({
-      dr_title: doc.dr_title,
-      dr_role: doc.dr_role,
-      dr_subtitle: doc.dr_subtitle,
-      dr_exp: doc.dr_exp,
-      department: doc.department,
-      contact: doc.contact,
-      dr_desc: doc.dr_desc,
-      dr_image: doc.dr_image, // string for preview
-    });
+  setForm({
+    dr_title: doc.dr_title,
+    dr_role: doc.dr_role,
+    dr_subtitle: doc.dr_subtitle,
+    dr_exp: doc.dr_exp,
+    department: doc.department,
+    contact: doc.contact,
+    dr_desc: doc.dr_desc,
+    dr_image: doc.dr_image,
 
-    window.scrollTo(0, 0);
-  };
+   
+    location: doc.location,
+    hospital: doc.hospital,
+    day: doc.day,
+  });
+
+  window.scrollTo(0, 0);
+};
 
   // DELETE
   const handleDelete = async (id) => {
@@ -162,7 +177,7 @@ const resetForm = () => {
   return (
     <>
       {/* FORM */}
-      <div className="table-card mb-4">
+      <div className="table-card doctor-form-card mb-4">
         <div className="table-card-header">
           <h6>{editId ? "Update Doctor" : "Add Doctor"}</h6>
         </div>
@@ -233,6 +248,36 @@ const resetForm = () => {
                 />
               </div>
 
+              <div className="col-md-4">
+  <input
+    name="location"
+    className="form-control"
+    placeholder="Location"
+    value={form.location}
+    onChange={handleChange}
+  />
+</div>
+
+<div className="col-md-4">
+  <input
+    name="hospital"
+    className="form-control"
+    placeholder="Hospital"
+    value={form.hospital}
+    onChange={handleChange}
+  />
+</div>
+
+<div className="col-md-4">
+  <input
+    name="day"
+    className="form-control"
+    placeholder="Day (Mon-Fri)"
+    value={form.day}
+    onChange={handleChange}
+  />
+</div>
+
               <div className="col-12">
                 <div ref={quillRef} style={{ background: "#fff", minHeight: "150px" }} />
               </div>
@@ -258,7 +303,7 @@ const resetForm = () => {
   ref={fileInputRef}  // ✅ add this
 />
               </div>
-              {/* IMAGE PREVIEW */}
+             
               {form.dr_image && (
                 <div className="col-12">
                   <img
@@ -294,90 +339,103 @@ const resetForm = () => {
         </div>
       </div>
 
-      {/* TABLE */}
-      <div className="table-card">
-        <div className="table-card-header">
-          <h6>Doctors List</h6>
-          <span>{doctors.length} Records</span>
-        </div>
-
-        <div className="table-responsive">
-          <table className="table align-middle">
-            <thead className="table-light">
-              <tr>
-                <th>ID</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Subtitle</th>
-                <th>Experience</th>
-                <th>Department</th>
-                <th>Contact</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {doctors.map((doc) => (
-                <tr key={doc.id}>
-                  <td>#{doc.id}</td>
-
-                  <td>
-                    <img
-                      src={
-                        doc.dr_image
-                          ? `http://localhost:5000/uploads/${doc.dr_image}`
-                          : "https://via.placeholder.com/60"
-                      }
-                      style={{ width: 60, height: 60, borderRadius: 8 }}
-                    />
-                  </td>
-
-                  <td>{doc.dr_title || "-"}</td>
-                  <td>{doc.dr_role || "-"}</td>
-                  <td>{doc.dr_subtitle || "-"}</td>
-                  <td>{doc.dr_exp ? `${doc.dr_exp} yrs` : "-"}</td>
-                  <td>{doc.department || "-"}</td>
-                  <td>{doc.contact || "-"}</td>
-
-                  <td>
-                    {doc.dr_desc
-                      ? doc.dr_desc.replace(/<[^>]+>/g, "").substring(0, 40) + "..."
-                      : "-"}
-                  </td>
-
-                  <td>
-  <div className="d-flex gap-2 flex-nowrap">
-    <button
-      className="btn btn-warning btn-sm"
-      onClick={() => handleEdit(doc)}
-    >
-      Edit
-    </button>
-
-    <button
-      className="btn btn-danger btn-sm"
-      onClick={() => handleDelete(doc.id)}
-    >
-      Delete
-    </button>
+  
+<div className="table-card doctors-list-card">
+  <div className="table-card-header">
+    <h6>Doctors List</h6>
+    <span className="length">{doctors.length} Records</span>
   </div>
-</td>
-                </tr>
-              ))}
 
-              {doctors.length === 0 && (
-                <tr>
-                  <td colSpan="10" className="text-center">
-                    No Doctors Found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+
+    <div className="doctor-scroll" role="region" aria-label="Doctors table horizontal scroll">
+    <table className="doctor-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Subtitle</th>
+          <th>Experience</th>
+          <th>Department</th>
+          <th>Contact</th>
+          <th>Location</th>
+          <th>Hospital</th>
+          <th>Day</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {[...doctors]
+    .sort((a, b) => a.id - b.id)
+    .map((doc) => (
+          <tr key={doc.id}>
+            <td>#{doc.id}</td>
+
+            <td>
+              <img
+                src={
+                  doc.dr_image
+                    ? `http://localhost:5000/uploads/${doc.dr_image}`
+                    : "https://via.placeholder.com/60"
+                }
+                className="table-img"
+              />
+            </td>
+
+            <td>{doc.dr_title || "-"}</td>
+            <td className="role-cell" title={doc.dr_role || "-"}>
+              {doc.dr_role || "-"}
+            </td>
+            <td className="subtitle-cell" title={doc.dr_subtitle || "-"}>
+              {doc.dr_subtitle || "-"}
+            </td>
+            <td>{doc.dr_exp ? `${doc.dr_exp} yrs` : "-"}</td>
+            <td>{doc.department || "-"}</td>
+            <td>{doc.contact || "-"}</td>
+            <td>{doc.location || "-"}</td>
+            <td>{doc.hospital || "-"}</td>
+            <td>{doc.day || "-"}</td>
+
+            <td className="desc-cell">
+              {doc.dr_desc
+                ? doc.dr_desc.replace(/<[^>]+>/g, "").substring(0, 40) + "..."
+                : "-"}
+            </td>
+
+            <td>
+              <div className="d-flex gap-2 flex-nowrap">
+                <button
+                  className="btn btn-warning btn-sm"
+                  onClick={() => handleEdit(doc)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(doc.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+
+        {doctors.length === 0 && (
+          <tr>
+            <td colSpan="13" className="text-center">
+              No Doctors Found
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+    </div>
+ </div>
     </>
   );
 }

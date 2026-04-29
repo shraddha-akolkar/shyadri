@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db"); // ✅ THIS WAS MISSING
+const sequelize = require("../config/db");
 
 const Doctor = sequelize.define("Doctor", {
   dr_title: {
@@ -7,7 +7,7 @@ const Doctor = sequelize.define("Doctor", {
     allowNull: false,
   },
 
-  dr_role: {   // ✅ ADD ROLE HERE
+  dr_role: {
     type: DataTypes.STRING,
   },
 
@@ -32,6 +32,19 @@ const Doctor = sequelize.define("Doctor", {
   },
 
   dr_image: {
+    type: DataTypes.STRING,
+  },
+
+ 
+  location: {
+    type: DataTypes.STRING,
+  },
+
+  hospital: {
+    type: DataTypes.STRING,
+  },
+
+  day: {
     type: DataTypes.STRING,
   }
 });

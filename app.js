@@ -6,7 +6,7 @@ const app = express();
 const doctorRoutes = require("./routes/drroutes");
 const adminRoutes = require("./routes/adminRoutes");
 
-// ✅ IMPORTANT: enable CORS FIRST
+
 app.use(cors({
   origin: "http://localhost:5173", // frontend
   credentials: true

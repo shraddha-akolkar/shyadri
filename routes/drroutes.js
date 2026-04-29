@@ -7,8 +7,14 @@ const upload = require("../middleware/upload");
 
 router.post("/", upload.single("dr_image"), doctorController.createDoctor);
 
+
 router.get("/", doctorController.getAllDoctors);
 router.get("/:id", doctorController.getDoctorById);
-router.put("/:id", upload.single("dr_image"), doctorController.updateDoctor);router.delete("/:id", doctorController.deleteDoctor);
+
+
+router.put("/:id", upload.single("dr_image"), doctorController.updateDoctor);
+
+
+router.delete("/:id", doctorController.deleteDoctor);
 
 module.exports = router;
