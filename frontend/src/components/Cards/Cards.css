@@ -6,6 +6,9 @@
 .cards-section .row {
 
   margin: 0 auto;
+    font-weight: 500;
+    font-family: 'Figtree', sans-serif;
+  font-size: 15px;
 }
 
 
@@ -16,11 +19,20 @@
   gap: 8px;
 }
 
+
+.left-top p{
+    font-weight: 400;
+    font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+}
+
+.left-top span{
+  color: #c2202d;
+}
 .search-head{
     margin: 0 !important;
     padding: 0;
   font-family: 'Figtree';
-  font-size: 16PX;
 
 }
 .search-row {
@@ -49,9 +61,10 @@
 
 }
 
+.search-row
 .records {
   margin: 0;
-  font-size: 12px;
+  font-size:13px;
   color: #A1A1A1CC;
   white-space: nowrap;
   font-family: 'Figtree';
@@ -96,8 +109,8 @@ background-size: 10px;
 }
 
 
-.doctor-card {
-  border: 1px solid #e8e8e8;
+.doctor-cards {
+     border: .79px solid #0000001a;
   border-radius: 14px;
   padding:  10px;
   background: #fff;
@@ -117,13 +130,13 @@ background-size: 10px;
   display: flex;
   flex-direction: row;
   /* align-items: center; */
-  gap: 20px;
+  gap: 10px;
 }
 
 .doc-img {
-  width: 130px;
+  width: 120px;
   height: 160px;
-  /* object-fit: cover; */
+  object-fit: cover;
   object-position: top;
   border-radius: 10px;
   flex-shrink: 0;
@@ -142,8 +155,10 @@ background-size: 10px;
   margin: 0;
   font-size: 17px;
   font-weight: 700;
+
   color: #1a1a1a;
   line-height: 1.3;
+  padding-top: 10px;
 }
 
 .doc-speciality {
@@ -163,7 +178,7 @@ background-size: 10px;
 
 .doc-exp strong {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 

@@ -242,7 +242,7 @@ const Cards = () => {
 
       <div className="doctor-grid">
         {paginatedDoctors.map((doc) => (
-          <div className="doctor-card" key={doc.id}>
+          <div className="doctor-cards" key={doc.id}>
             <div className="card-top">
               <img
                 src={`http://localhost:5000/uploads/${doc.dr_image}`}
@@ -250,7 +250,7 @@ const Cards = () => {
                 className="doc-img"
               />
 
-              <div className="doc-info">
+              <div className="doc-info ">
                 <h3 className="doc-name">{doc.dr_title}</h3>
 
                 <p className="doc-speciality">{doc.department}</p>

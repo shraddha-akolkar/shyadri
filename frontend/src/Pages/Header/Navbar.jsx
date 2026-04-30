@@ -63,12 +63,17 @@ const Navbar = () => {
 
                 <li>
                   <select className="menu-nav">
+                    <option>Specialities</option>
+                    <option>Specialities</option>
                     <option>Hospitals</option>
                   </select>
                 </li>
 
                 <li>
                   <select className="menu-nav">
+                    <option>Specialities</option>
+                    <option>Specialities</option>
+                    <option>Specialities</option>
                     <option>Specialities</option>
                   </select>
                 </li>
@@ -77,7 +82,9 @@ const Navbar = () => {
 
                 <li>
                   <select className="menu-nav">
-                    <option>Blogs/Videos</option>
+                    <option>Blogs/Video</option>
+                    <option>Blogs/Video</option>
+                    <option>Blogs/Video</option>
                   </select>
                 </li>
 

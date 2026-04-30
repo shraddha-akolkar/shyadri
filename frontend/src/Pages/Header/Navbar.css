@@ -43,16 +43,21 @@
 }
 
 .phone-text {
+
   padding-left: 10px;
 }
 
 .phone-text small {
-  font-size: 12px;
+  font-weight: 500;
+    font-family: 'Figtree', sans-serif;
+  font-size: 13px;
   color: #777;
 }
 
 .phone-text .number {
   font-weight: 600;
+    font-family: 'Figtree', sans-serif;
+  font-size: 13px;
   color: #c2202d;
 }
 
@@ -67,6 +72,9 @@
   justify-content: center;
   gap: 6px;
   white-space: nowrap;
+    font-weight: 600;
+    font-family: 'Figtree', sans-serif;
+  font-size: 16px;
 }
 
 .bottom-navbar {
@@ -87,12 +95,15 @@
   font-weight: 500;
   cursor: pointer;
   color: black;
-
+  font-weight: 500;
+    font-family: 'Figtree', sans-serif;
+  font-size: 15px;
 }
 
 .menu-list li {
-  font-size: 15px;
   font-weight: 500;
+    font-family: 'Figtree', sans-serif;
+  font-size: 15px;
   cursor: pointer;
 }
 
