@@ -5,4 +5,4 @@ const adminController = require("../controllers/adminController");
 
 router.post("/login", adminController.login);
 
-module.exports = router; // 🔥 VERY IMPORTANT
+module.exports = router; 

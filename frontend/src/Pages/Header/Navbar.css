@@ -5,8 +5,6 @@
   background: #fff;
 }
 
-
-
 .top-left {
   padding-left: 50px;
 }
@@ -43,20 +41,19 @@
 }
 
 .phone-text {
-
   padding-left: 10px;
 }
 
 .phone-text small {
   font-weight: 500;
-    font-family: 'Figtree', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 13px;
   color: #777;
 }
 
 .phone-text .number {
   font-weight: 600;
-    font-family: 'Figtree', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 13px;
   color: #c2202d;
 }
@@ -72,8 +69,8 @@
   justify-content: center;
   gap: 6px;
   white-space: nowrap;
-    font-weight: 600;
-    font-family: 'Figtree', sans-serif;
+  font-weight: 600;
+  font-family: 'Figtree', sans-serif;
   font-size: 16px;
 }
 
@@ -88,21 +85,9 @@
   color: black;
 }
 
-.menu-nav {
-  border: none;
-  width: 125px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  color: black;
-  font-weight: 500;
-    font-family: 'Figtree', sans-serif;
-  font-size: 15px;
-}
-
 .menu-list li {
   font-weight: 500;
-    font-family: 'Figtree', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 15px;
   cursor: pointer;
 }
@@ -124,8 +109,62 @@
 }
 
 
+.dropdown-item-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-nav-label {
+  font-weight: 500;
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.dropdown-arrow {
+  font-size: 11px;
+  color: #777;
+}
+
+.dropdown-menu-custom {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 6px 0;
+  margin: 6px 0 0 0;
+  min-width: 170px;
+  z-index: 9999;
+}
+
+.dropdown-menu-custom li {
+  padding: 9px 16px;
+  font-size: 14px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 400;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.dropdown-menu-custom li:hover {
+  background: #f5f5f5;
+  color: #c2202d;
+}
+
+
 .mobile-icons {
-  padding-right: 15px;
+  padding-right: 0;
 }
 
 .mobile-login {
@@ -154,6 +193,7 @@
   line-height: 1;
 }
 
+
 .mobile-menu {
   display: none;
 }
@@ -164,18 +204,58 @@
   border-top: 1px solid #eee;
 }
 
-.mobile-menu ul {
+.mobile-menu > ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.mobile-menu ul li {
+.mobile-menu > ul > li {
   padding: 12px 0;
   border-bottom: 1px solid #eee;
   font-weight: 500;
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
 }
 
+.mobile-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mobile-arrow {
+  font-size: 18px;
+  color: #999;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.mobile-arrow.open {
+  transform: rotate(90deg);
+  color: #c2202d;
+}
+
+.mobile-submenu {
+  list-style: none !important;
+  padding: 4px 0 4px 16px !important;
+  margin: 8px 0 0 0 !important;
+  border-left: 2px solid #c2202d;
+}
+
+.mobile-submenu li {
+  padding: 8px 0 !important;
+  border-bottom: none !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #555;
+}
+
+.mobile-submenu li:hover {
+  color: #c2202d;
+}
 
 
 @media (max-width: 1024px) {
@@ -192,12 +272,10 @@
   }
 
   .menu-list li,
-  .menu-nav {
+  .menu-nav-label {
     font-size: 14px;
   }
 }
-
-
 
 @media (max-width: 992px) {
   .top-bar-nav,
@@ -205,22 +283,22 @@
     display: none !important;
   }
 
+  .top-left {
+    padding-left: 10px;   
+  }
+
   .top-left img {
     height: 75px;
   }
-
-  .top-left {
-    padding-left: 15px;
-  }
 }
-
-
-
-
 
 @media (max-width: 767px) {
   .top-left img {
     height: 65px;
+  }
+
+  .top-left {
+    padding-left: 8px;
   }
 
   .mobile-login {
@@ -238,16 +316,18 @@
   }
 }
 
-
-
 @media (max-width: 552px) {
   .top-left img {
     height: 70px;
   }
 
+  .top-left {
+    padding-left: 8px;
+  }
+
   .mobile-icons {
     gap: 6px;
-    padding-right: 10px;
+    padding-right: 8px;  
   }
 
   .mobile-login {
@@ -274,8 +354,6 @@
     margin-top: 8px;
   }
 }
-
-
 
 @media (min-width: 993px) {
   .mobile-menu {

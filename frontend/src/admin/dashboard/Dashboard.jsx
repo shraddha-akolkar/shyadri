@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./Dashboard.css"
 function Dashboard() {
   const [doctors, setDoctors] = useState([]);
 
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
-  const fetchDoctors = async () => {
+  const fetchDoctors = useCallback(async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/doctors");
       setDoctors(res.data);
-    } catch (err) {
-      console.log(err);
+    } catch  {
+      // console.log(err);
     }
-  };
+  }, []);
 
-  // Stats
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchDoctors();
+  }, [fetchDoctors]);
+
+
   const totalDoctors = doctors.length;
 
   const totalDepartments = new Set(
@@ -44,7 +45,7 @@ function Dashboard() {
 
   return (
     <>
-      {/* STATS */}
+     
       <div className="row g-3 mb-3">
         <div className="col-md-4">
           <div className="stat-card">
@@ -68,11 +69,11 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* TABLE */}
+    
       <div className="table-card">
         <div className="table-card-header">
           <h6>Doctors List</h6>
-          <span>Showing {doctors.length} records</span>
+          <span className="header-number">Showing {doctors.length} records</span>
         </div>
 
         <table className="doctors-table">

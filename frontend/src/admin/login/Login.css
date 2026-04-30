@@ -55,7 +55,7 @@
 
 .form-control {
   border: 1.5px solid #d0e8f5;
-  border-left: none;
+  /* border-left: none; */
   font-size: 14px;
   color: #0d3a5c;
 }

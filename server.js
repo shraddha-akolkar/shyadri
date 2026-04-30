@@ -1,7 +1,7 @@
 const app = require("./app");
 const sequelize = require("./config/db");
 
-sequelize.sync({ alter: true }) 
+sequelize.sync() 
   .then(() => {
     console.log("DB updated & connected");
     app.listen(5000, () => {

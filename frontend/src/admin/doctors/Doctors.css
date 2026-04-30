@@ -13,9 +13,13 @@ padding: 20px;
   padding-left: 20px;
 }
 
-/* ================================
-   DOCTOR SCROLL WRAPPER
-================================= */
+
+.header-number{
+  margin-top: -10px !important;
+  padding-left: 10px;
+}
+
+
 .doctor-scroll {
   width: 100%;
   overflow-x: scroll;
@@ -32,15 +36,13 @@ padding: 20px;
   background: #64748b;
 }
 
-/* Firefox */
+
 .doctor-scroll {
   scrollbar-width: thin;
   scrollbar-color: #94a3b8 #f1f5f9;
 }
 
-/* ================================
-   TABLE
-================================= */
+
 .doctor-table {
   width: max-content;
   min-width: 1900px;
@@ -50,7 +52,7 @@ padding: 20px;
   table-layout: auto;
 }
 
-/* Header row */
+
 .doctor-table thead th {
   position: sticky;
   top: 0;
@@ -65,7 +67,7 @@ padding: 20px;
   text-overflow: ellipsis;
 }
 
-/* Body cells */
+
 .doctor-table td {
   padding: 12px 14px;
   text-align: left;
@@ -77,30 +79,28 @@ padding: 20px;
   font-size: 13.5px;
 }
 
-/* Narrow subtitle column */
+
 .doctor-table th:nth-child(4),
 .doctor-table td:nth-child(4) {
   width: 140px;
   max-width: 140px;
 }
 
-/* Narrow subtitle column */
+
 .doctor-table th:nth-child(5),
 .doctor-table td:nth-child(5) {
   width: 180px;
   max-width: 180px;
 }
 
-/* Narrow description column */
+
 .doctor-table th:nth-child(12),
 .doctor-table td:nth-child(12) {
   width: 110px;
   max-width: 110px;
 }
 
-/* ================================
-   STICKY ACTION COLUMN
-================================= */
+
 .doctor-table th:last-child,
 .doctor-table td:last-child {
   position: sticky;
@@ -115,9 +115,7 @@ padding: 20px;
 
 
 
-/* ================================
-   HOVER
-================================= */
+
 .doctor-table tbody tr:hover td {
   background: #f1f5f9;
   transition: background 0.2s;
@@ -125,9 +123,7 @@ padding: 20px;
 
 
 
-/* ================================
-   IMAGE
-================================= */
+
 .table-img {
   width: 45px;
   height: 45px;
@@ -136,9 +132,7 @@ padding: 20px;
   display: block;
 }
 
-/* ================================
-   DESCRIPTION CELL
-================================= */
+
 .desc-cell {
   max-width: 110px;
   white-space: nowrap;
@@ -161,16 +155,12 @@ padding: 20px;
 }
 
 
-/* ================================
-   FORM CARD
-================================= */
+
 .doctor-form-card {
   overflow: visible !important;
 }
 
-/* ================================
-   TABLE CARD — fix overflow hidden blocking scrollbar
-================================= */
+
 .doctors-list-card {
   overflow: visible !important;
   border-radius: 12px;
@@ -178,9 +168,7 @@ padding: 20px;
   background: white;
 }
 
-/* ================================
-   IMAGE PREVIEW
-================================= */
+
 .preview-img {
   width: 100px;
   height: 100px;

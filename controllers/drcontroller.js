@@ -1,7 +1,7 @@
 const { Op, fn, col, where } = require("sequelize");
 const Doctor = require("../models/dr");
 
-// helper → clean empty values
+
 const clean = (val) => {
   if (
     val === undefined ||
@@ -98,7 +98,7 @@ exports.getAllDoctors = async (req, res) => {
 
     const doctors = await Doctor.findAll({
       where: filters.length ? { [Op.and]: filters } : undefined,
-      order: [["id", "ASC"]],
+      order: [["dr_title", "ASC"]],
     });
 
     res.json(doctors);

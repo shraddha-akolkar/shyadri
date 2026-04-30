@@ -30,7 +30,7 @@ function Login() {
         }
       );
 
-      // ✅ store admin data
+    
       localStorage.setItem("admin", JSON.stringify(res.data.admin));
 
       alert("Login successful");
@@ -49,7 +49,7 @@ function Login() {
       <div className="card login-card shadow">
         <div className="card-body p-4">
 
-          {/* HEADER */}
+    
           <div className="text-center mb-4">
             <h2 className="login-title">Admin Login</h2>
             <p className="login-subtitle mb-0">
@@ -57,10 +57,10 @@ function Login() {
             </p>
           </div>
 
-          {/* FORM */}
+  
           <form onSubmit={handleLogin}>
 
-            {/* EMAIL */}
+     
             <div className="mb-3">
               <label className="form-label">Email Address</label>
               <div className="input-group">
@@ -75,7 +75,7 @@ function Login() {
               </div>
             </div>
 
-            {/* PASSWORD */}
+    
             <div className="mb-4">
               <label className="form-label">Password</label>
               <div className="input-group">
@@ -90,7 +90,7 @@ function Login() {
               </div>
             </div>
 
-            {/* BUTTON */}
+       
             <div className="d-grid">
               <button
                 className="btn btn-login"
@@ -103,7 +103,7 @@ function Login() {
 
           </form>
 
-          {/* FOOTER */}
+       
           <div className="text-center mt-3">
             <a href="#" className="forgot-link">
               Forgot password?

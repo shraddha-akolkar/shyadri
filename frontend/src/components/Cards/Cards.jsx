@@ -1,7 +1,7 @@
 import "./Cards.css";
 import Refresh from "../../assets/svg/Refresh";
 import Arrow from "../../assets/svg/Arrow";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -17,24 +17,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       if (currentPage <= 4) {
         pages.push(1, 2, 3, 4, "...", totalPages);
       } else if (currentPage >= totalPages - 3) {
-        pages.push(
-          1,
-          "...",
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages
-        );
+        pages.push(1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages
-        );
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
       }
     }
 
@@ -61,9 +46,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
       {getPages().map((page, idx) =>
         page === "..." ? (
-          <span key={idx} className="page-dots">
-            ...
-          </span>
+          <span key={idx} className="page-dots">...</span>
         ) : (
           <button
             key={page}
@@ -107,15 +90,7 @@ const Cards = () => {
   const [department, setDepartment] = useState("");
   const [dayWise, setDayWise] = useState("");
 
-  useEffect(() => {
-    fetchAllDoctors();
-  }, []);
-
-  useEffect(() => {
-    fetchDoctors();
-  }, [search, location, hospital, department, dayWise]);
-
-  const fetchAllDoctors = async () => {
+  const fetchAllDoctors = useCallback(async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/doctors");
       setAllDoctors(res.data);
@@ -123,9 +98,9 @@ const Cards = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
-  const fetchDoctors = async () => {
+  const fetchDoctors = useCallback(async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/doctors", {
         params: {
@@ -141,7 +116,17 @@ const Cards = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [search, location, hospital, department, dayWise]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchAllDoctors();
+  }, [fetchAllDoctors]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchDoctors();
+  }, [fetchDoctors]);
 
   const resetFilters = () => {
     setSearch("");
@@ -160,7 +145,7 @@ const Cards = () => {
 
   return (
     <section className="cards-section section-space side-space">
-      <div className="row align-items-center top-bar">
+      <div className="row align-items-center top-bar mx-0">
         <div className="col-lg-5 col-12 left-top">
           <p className="search-head">
             Home / <span>Doctors</span>
@@ -180,58 +165,34 @@ const Cards = () => {
           </div>
         </div>
 
-        <div className="col-lg-7 col-12 right-top d-flex justify-content-lg-end flex-wrap dropdown">
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
+     
+        <div className="col-lg-7 col-12 right-top d-flex justify-content-lg-end flex-wrap">
+          <select value={location} onChange={(e) => setLocation(e.target.value)}>
             <option value="">Location</option>
-            {[...new Set(allDoctors.map((d) => d.location).filter(Boolean))].map(
-              (item, i) => (
-                <option key={i} value={item}>
-                  {item}
-                </option>
-              )
-            )}
+            {[...new Set(allDoctors.map((d) => d.location).filter(Boolean))].map((item, i) => (
+              <option key={i} value={item}>{item}</option>
+            ))}
           </select>
 
-          <select
-            value={hospital}
-            onChange={(e) => setHospital(e.target.value)}
-          >
+          <select value={hospital} onChange={(e) => setHospital(e.target.value)}>
             <option value="">Hospital</option>
-            {[...new Set(allDoctors.map((d) => d.hospital).filter(Boolean))].map(
-              (item, i) => (
-                <option key={i} value={item}>
-                  {item}
-                </option>
-              )
-            )}
+            {[...new Set(allDoctors.map((d) => d.hospital).filter(Boolean))].map((item, i) => (
+              <option key={i} value={item}>{item}</option>
+            ))}
           </select>
 
-          <select className="dept-dropdown"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-          >
+          <select value={department} onChange={(e) => setDepartment(e.target.value)}>
             <option value="">Department</option>
-            {[...new Set(allDoctors.map((d) => d.department).filter(Boolean))].map(
-              (item, i) => (
-                <option key={i} value={item}>
-                  {item}
-                </option>
-              )
-            )}
+            {[...new Set(allDoctors.map((d) => d.department).filter(Boolean))].map((item, i) => (
+              <option key={i} value={item}>{item}</option>
+            ))}
           </select>
 
           <select value={dayWise} onChange={(e) => setDayWise(e.target.value)}>
             <option value="">Day Wise</option>
-            {[...new Set(allDoctors.map((d) => d.day).filter(Boolean))].map(
-              (item, i) => (
-                <option key={i} value={item}>
-                  {item}
-                </option>
-              )
-            )}
+            {[...new Set(allDoctors.map((d) => d.day).filter(Boolean))].map((item, i) => (
+              <option key={i} value={item}>{item}</option>
+            ))}
           </select>
 
           <div onClick={resetFilters} style={{ cursor: "pointer" }}>
@@ -250,28 +211,26 @@ const Cards = () => {
                 className="doc-img"
               />
 
-              <div className="doc-info ">
+              <div className="doc-info">
                 <h3 className="doc-name">{doc.dr_title}</h3>
-
                 <p className="doc-speciality">{doc.department}</p>
 
-{Number(doc.dr_exp) > 0 && (
-  <p className="doc-exp">
-    <strong>{doc.dr_exp} Years</strong>
-  </p>
-)}
-
+                {Number(doc.dr_exp) > 0 && (
+                  <p className="doc-exp">
+                    <strong>{doc.dr_exp} Years</strong>
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="card-actions">
               <div className="action-row">
                 <button
-  className="btn-view"
-  onClick={() => navigate(`/certaincard/${doc.id}`)}
->
-  View Now <span><Arrow /></span>
-</button>
+                  className="btn-view"
+                  onClick={() => navigate(`/certaincard/${doc.id}`)}
+                >
+                  View Now <span><Arrow /></span>
+                </button>
 
                 <button className="btn-book">Book Now</button>
               </div>
